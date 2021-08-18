@@ -5,12 +5,12 @@ import torch
 from torch.utils.data import Dataset
 
 
-class TeCDataset(Dataset):
+class ClueWordsDataset(Dataset):
     """MNIST Dataset.
     """
 
     def __init__(self, samples, ids_path, tokenizer, max_length):
-        super(TeCDataset, self).__init__()
+        super(ClueWordsDataset, self).__init__()
         self.samples = samples
         self.tokenizer = tokenizer
         self.max_length = max_length

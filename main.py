@@ -9,7 +9,7 @@ from pytorch_lightning.callbacks import ModelCheckpoint, EarlyStopping
 from transformers import AutoTokenizer
 
 from source.callback.PredictionWriter import PredictionWriter
-from source.datamodule.TecDataModule import TeCDataModule
+from source.datamodule.ClueWordsDataModule import ClueWordsDataModule
 from source.helper.EvalHelper import EvalHelper
 from source.model.TeCModel import TecModel
 
@@ -71,7 +71,7 @@ def train(params):
         # Train the ⚡ model
         trainer.fit(
             model=TecModel(params.model),
-            datamodule=TeCDataModule(params.data, get_tokenizer(params.model), fold=fold)
+            datamodule=ClueWordsDataModule(params.data, get_tokenizer(params.model), fold=fold)
         )
 
 
@@ -83,24 +83,21 @@ def test(params):
 
 
         # data
-        dm = TeCDataModule(params.data, get_tokenizer(params.model), fold=fold)
+        dm = ClueWordsDataModule(params.data, get_tokenizer(params.model), fold=fold)
 
         # model
         model = TecModel.load_from_checkpoint(
             checkpoint_path=f"{params.model_checkpoint.dir}{params.model.name}_{params.data.name}_{fold}.ckpt"
         )
 
-        params.prediction.name = f"{params.model.name}_{params.data.name}_{fold}.prd"
+        model.hparams.stat.name = f"{params.model.name}_{params.data.name}_{fold}.stat"
 
         # trainer
         trainer = pl.Trainer(
-            gpus=params.trainer.gpus,
-            callbacks=[PredictionWriter(params.prediction)]
+            gpus=params.trainer.gpus
         )
 
         # testing
-        dm.prepare_data()
-        dm.setup('test')
         trainer.test(
             model=model,
             datamodule=dm
@@ -121,7 +118,7 @@ def predict(params):
 
 
         # data
-        dm = TeCDataModule(params.data, get_tokenizer(params.model), fold=fold)
+        dm = ClueWordsDataModule(params.data, get_tokenizer(params.model), fold=fold)
 
         # model
         model = TecModel.load_from_checkpoint(

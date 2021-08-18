@@ -4,14 +4,14 @@
 
 ```shell script
 # clone the project 
-git clone git@github.com:celsofranssa/TeCBench.git
+git clone git@github.com:celsofranssa/ClueWords.git
 
 # change directory to project folder
-cd TeCBench/
+cd ClueWords/
 
 # Create a new virtual environment by choosing a Python interpreter 
 # and making a ./venv directory to hold it:
-virtualenv -p python3 ./venv
+virtualenv -p python3 ClueWords/
 
 # activate the virtual environment using a shell-specific command:
 source ./venv/bin/activate
@@ -20,27 +20,27 @@ source ./venv/bin/activate
 pip install -r requirements.txt
 
 # setting python path
-export PYTHONPATH=$PATHONPATH:<path-to-project-dir>/TeCBench/
+export PYTHONPATH=$PATHONPATH:<path-to-project-dir>/ClueWords/
 
 # (if you need) to exit virtualenv later:
 deactivate
 ```
 
 ### 2. Datasets
-Downloading the datasets from [Kaggle Datasets](https://www.kaggle.com/celsofranssa/tecbench-datasets) 
+Downloading the datasets from [Kaggle Datasets](https://www.kaggle.com/celsofranssa/ClueWords-datasets) 
 (get kaggle credentials on [Kaggle API Docs](https://github.com/Kaggle/kaggle-api#api-credentials)):
 
 ```shell script
 kaggle datasets download \
     --unzip \
-    -d celsofranssa/tecbench-datasets \
+    -d celsofranssa/ClueWords-datasets \
     -p resource/dataset/
 ```
 
 Make sure that after completing the download of the datasets the file structure is as follows:
 
 ```shell script
-TeCBench/
+ClueWords/
 ├── main.py
 ├── requirements.txt
 ├── resource

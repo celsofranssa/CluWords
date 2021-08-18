@@ -1,7 +1,6 @@
 defaults:
   - model: BERT_NO_POOL
-  - data: ACM
-
+  - data: SST2
 
 log:
   dir: resource/log/
@@ -13,14 +12,6 @@ representation:
   dir: resource/representation/
   name: ${model.name}_${data.name}.rpr
   write_interval: epoch
-
-prediction:
-  dir: resource/prediction/
-  name: ${model.name}_${data.name}.prd
-  write_interval: epoch
-
-stat:
-  dir: resource/stat/
 
 
 tasks: [ "fit" ]

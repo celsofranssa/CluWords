@@ -5,13 +5,13 @@ import pytorch_lightning as pl
 
 from torch.utils.data import DataLoader
 
-from source.dataset.TeCDataset import TeCDataset
+from source.dataset.ClueWordsDataset import ClueWordsDataset
 
 
-class TeCDataModule(pl.LightningDataModule):
+class ClueWordsDataModule(pl.LightningDataModule):
 
     def __init__(self, params, tokenizer, fold):
-        super(TeCDataModule, self).__init__()
+        super(ClueWordsDataModule, self).__init__()
         self.params = params
         self.tokenizer=tokenizer
         self.fold = fold
@@ -23,14 +23,14 @@ class TeCDataModule(pl.LightningDataModule):
     def setup(self, stage=None):
 
         if stage == 'fit' or stage is None:
-            self.train_dataset = TeCDataset(
+            self.train_dataset = ClueWordsDataset(
                 samples=self.samples,
                 ids_path=self.params.dir + f"fold_{self.fold}/train.pkl",
                 tokenizer=self.tokenizer,
                 max_length=self.params.max_length
             )
 
-            self.val_dataset = TeCDataset(
+            self.val_dataset = ClueWordsDataset(
                 samples=self.samples,
                 ids_path=self.params.dir + f"fold_{self.fold}/val.pkl",
                 tokenizer=self.tokenizer,
@@ -38,7 +38,7 @@ class TeCDataModule(pl.LightningDataModule):
             )
 
         if stage == 'test':
-            self.test_dataset = TeCDataset(
+            self.test_dataset = ClueWordsDataset(
                 samples=self.samples,
                 ids_path=self.params.dir + f"fold_{self.fold}/test.pkl",
                 tokenizer=self.tokenizer,
@@ -46,14 +46,6 @@ class TeCDataModule(pl.LightningDataModule):
 
             )
 
-        if stage == 'predict':
-            self.pred_dataset = TeCDataset(
-                samples=self.samples,
-                ids_path=os.path.join(self.params.dir, f"fold_{self.fold}/pred.pkl"),
-                tokenizer=self.tokenizer,
-                max_length=self.params.max_length
-
-            )
 
     def train_dataloader(self):
         return DataLoader(
@@ -80,9 +72,8 @@ class TeCDataModule(pl.LightningDataModule):
         )
 
     def predict_dataloader(self):
-        return DataLoader(
-            self.pred_dataset,
-            batch_size=self.params.batch_size,
-            shuffle=False,
-            num_workers=self.params.num_workers
-        )
+        return [
+            self.train_dataloader(),
+            self.val_dataloader(),
+            self.test_dataloader()
+        ]
