@@ -1,4 +1,4 @@
-# Text Classification Benchmark based-on Fine-tuned Transformer
+# ClueWords based-on Fine-tuned Transformer
 
 ### 1. Quick Start
 
