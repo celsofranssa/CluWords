@@ -1,6 +1,6 @@
-name: SST2
+name: english_dailabor
 
-dir: resource/dataset/sst2/
+dir: resource/dataset/english_dailabor/
 
 folds: [0,1,2,3,4]
 

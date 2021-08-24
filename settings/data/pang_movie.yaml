@@ -1,6 +1,6 @@
-name: SST2
+name: pang_movie
 
-dir: resource/dataset/sst2/
+dir: resource/dataset/pang_movie/
 
 folds: [0,1,2,3,4]
 

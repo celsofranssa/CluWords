@@ -1,6 +1,6 @@
-name: SST2
+name: tweet_semevaltest
 
-dir: resource/dataset/sst2/
+dir: resource/dataset/tweet_semevaltest/
 
 folds: [0,1,2,3,4]
 
