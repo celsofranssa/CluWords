@@ -22,7 +22,7 @@ class ClueWordsDataModule(pl.LightningDataModule):
 
     def setup(self, stage=None):
 
-        if stage == 'fit' or stage is None:
+        if stage == 'fit' or stage is "predict":
             self.train_dataset = ClueWordsDataset(
                 samples=self.samples,
                 ids_path=self.params.dir + f"fold_{self.fold}/train.pkl",
@@ -37,7 +37,7 @@ class ClueWordsDataModule(pl.LightningDataModule):
                 max_length=self.params.max_length
             )
 
-        if stage == 'test':
+        if stage == 'test' or stage is "predict":
             self.test_dataset = ClueWordsDataset(
                 samples=self.samples,
                 ids_path=self.params.dir + f"fold_{self.fold}/test.pkl",

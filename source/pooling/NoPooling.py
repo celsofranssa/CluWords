@@ -11,4 +11,4 @@ class NoPooling(LightningModule):
         super(NoPooling, self).__init__()
 
     def forward(self, attention_mask, encoder_outputs):
-        return encoder_outputs.pooler_output
+        return encoder_outputs.last_hidden_state

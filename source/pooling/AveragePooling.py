@@ -7,7 +7,7 @@ class AveragePooling(LightningModule):
     Performs average pooling on the last hidden-states transformer output.
     """
 
-    def __init__(self, hparams):
+    def __init__(self):
         super(AveragePooling, self).__init__()
 
     def forward(self, attention_mask, hidden_states):

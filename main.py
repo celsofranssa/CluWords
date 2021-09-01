@@ -9,8 +9,8 @@ from pytorch_lightning.callbacks import ModelCheckpoint, EarlyStopping
 from transformers import AutoTokenizer
 
 from source.callback.PredictionWriter import PredictionWriter
+from source.callback.WordRPRWriter import WordRPRWriter
 from source.datamodule.ClueWordsDataModule import ClueWordsDataModule
-from source.helper.EvalHelper import EvalHelper
 from source.model.TeCModel import TecModel
 
 
@@ -103,13 +103,6 @@ def test(params):
             datamodule=dm
         )
 
-
-def eval(params):
-    print(f"Evaluating {params.model.name} over {params.data.name} with fowling params\n"
-          f"{OmegaConf.to_yaml(params)}\n")
-    evaluator = EvalHelper(params)
-    evaluator.perform_eval()
-
 def predict(params):
 
     for fold in params.data.folds:
@@ -130,7 +123,7 @@ def predict(params):
         # trainer
         trainer = pl.Trainer(
             gpus=params.trainer.gpus,
-            callbacks=[PredictionWriter(params.representation)]
+            callbacks=[WordRPRWriter(params.representation)]
         )
 
         # predicting
@@ -151,8 +144,6 @@ def perform_tasks(params):
         train(params)
     if "test" in params.tasks:
         test(params)
-    if "eval" in params.tasks:
-        eval(params)
     if "predict" in params.tasks:
         predict(params)
 

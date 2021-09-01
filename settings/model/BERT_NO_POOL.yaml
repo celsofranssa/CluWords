@@ -4,8 +4,9 @@ encoder:
   _target_: source.encoder.BertEncoder.BertEncoder
   architecture: bert-base-uncased
   output_attentions: False
-  pooling:
-    _target_: source.pooling.NoPooling.NoPooling
+
+pooling:
+  _target_: source.pooling.AveragePooling.AveragePooling
 
 hidden_size: 768
 

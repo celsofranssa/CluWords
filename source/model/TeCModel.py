@@ -16,6 +16,8 @@ class TecModel(pl.LightningModule):
 
         self.encoder = instantiate(hparams.encoder)
 
+        self.pooling = instantiate(hparams.pooling)
+
         self.cls_head = torch.nn.Sequential(
             torch.nn.Dropout(hparams.dropout),
             torch.nn.Linear(hparams.hidden_size, hparams.num_classes),
@@ -36,14 +38,23 @@ class TecModel(pl.LightningModule):
             },
             prefix=prefix)
 
-    def forward(self, text):
-        return self.encoder(text)
+    def forward(self, text, attention_mask):
+        return self.encoder(text, attention_mask)
+
+    def _cls(self, text, attention_mask):
+
+        hidden  = self(text, attention_mask)
+        pooled =  self.pooling(
+            attention_mask, hidden
+        )
+        return self.cls_head(pooled)
+
 
     def training_step(self, batch, batch_idx):
         text, true_cls = batch["text"], batch["cls"]
-        pred_cls = self.cls_head(
-            self(text)
-        )
+        attention_mask = torch.gt(text, 0).int()
+        pred_cls = self._cls(text, attention_mask)
+
         train_loss = self.loss(pred_cls, true_cls)
 
         # log training loss
@@ -58,9 +69,9 @@ class TecModel(pl.LightningModule):
 
     def validation_step(self, batch, batch_idx):
         text, true_cls = batch["text"], batch["cls"]
-        pred_cls = self.cls_head(
-            self(text)
-        )
+        attention_mask = torch.gt(text, 0).int()
+        pred_cls = self._cls(text, attention_mask)
+
         val_loss = self.loss(pred_cls, true_cls)
 
         # log val loss
@@ -74,8 +85,8 @@ class TecModel(pl.LightningModule):
 
     def test_step(self, batch, batch_idx):
         idx, text, true_cls = batch["idx"], batch["text"], batch["cls"]
-        rpr = self.encoder(text)
-        pred_cls = torch.argmax(self.cls_head(rpr), dim=-1)
+        attention_mask = torch.gt(text, 0).int()
+        pred_cls = self._cls(text, attention_mask)
 
         # log test metrics
         self.log_dict(self.test_metrics(pred_cls, true_cls), prog_bar=True)
@@ -95,7 +106,8 @@ class TecModel(pl.LightningModule):
         idx, text = batch["idx"], batch["text"]
         return {
                 "idx": idx,
-                "rpr": self.encoder(text)
+                "text": text,
+                "rpr": self(text)
             }
 
     def configure_optimizers(self):
