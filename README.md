@@ -1,17 +1,17 @@
-# ClueWords based-on Fine-tuned Transformer
+# CluWords based-on Fine-tuned Transformer
 
 ### 1. Quick Start
 
 ```shell script
 # clone the project 
-git clone git@github.com:celsofranssa/ClueWords.git
+git clone git@github.com:celsofranssa/CluWords.git
 
 # change directory to project folder
-cd ClueWords/
+cd CluWords/
 
 # Create a new virtual environment by choosing a Python interpreter 
 # and making a ./venv directory to hold it:
-virtualenv -p python3 ClueWords/
+virtualenv -p python3 CluWords/
 
 # activate the virtual environment using a shell-specific command:
 source ./venv/bin/activate
@@ -20,27 +20,27 @@ source ./venv/bin/activate
 pip install -r requirements.txt
 
 # setting python path
-export PYTHONPATH=$PATHONPATH:<path-to-project-dir>/ClueWords/
+export PYTHONPATH=$PATHONPATH:<path-to-project-dir>/CluWords/
 
 # (if you need) to exit virtualenv later:
 deactivate
 ```
 
 ### 2. Datasets
-Downloading the datasets from [Kaggle Datasets](https://www.kaggle.com/celsofranssa/ClueWords-datasets) 
+Downloading the datasets from [Kaggle Datasets](https://www.kaggle.com/celsofranssa/CluWords-datasets) 
 (get kaggle credentials on [Kaggle API Docs](https://github.com/Kaggle/kaggle-api#api-credentials)):
 
 ```shell script
 kaggle datasets download \
     --unzip \
-    -d celsofranssa/ClueWords-datasets \
+    -d celsofranssa/CluWords-datasets \
     -p resource/dataset/
 ```
 
 Make sure that after completing the download of the datasets the file structure is as follows:
 
 ```shell script
-ClueWords/
+CluWords/
 ├── main.py
 ├── requirements.txt
 ├── resource
