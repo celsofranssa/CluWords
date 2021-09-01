@@ -1,6 +1,6 @@
-name: SST2
+name: sentistrength_youtube
 
-dir: resource/dataset/sst2/
+dir: resource/dataset/sentistrength_youtube/
 
 folds: [0,1,2,3,4]
 

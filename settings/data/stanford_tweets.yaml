@@ -1,6 +1,6 @@
-name: SST2
+name: stanford_tweets
 
-dir: resource/dataset/sst2/
+dir: resource/dataset/stanford_tweets/
 
 folds: [0,1,2,3,4]
 

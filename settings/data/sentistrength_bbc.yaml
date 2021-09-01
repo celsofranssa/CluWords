@@ -1,6 +1,6 @@
-name: SST2
+name: sentistrength_bbc
 
-dir: resource/dataset/sst2/
+dir: resource/dataset/sentistrength_bbc/
 
 folds: [0,1,2,3,4]
 

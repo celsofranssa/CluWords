@@ -1,6 +1,6 @@
-name: SST2
+name: vader_nyt
 
-dir: resource/dataset/sst2/
+dir: resource/dataset/vader_nyt/
 
 folds: [0,1,2,3,4]
 
