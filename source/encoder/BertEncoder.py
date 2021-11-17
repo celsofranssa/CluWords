@@ -13,15 +13,10 @@ class BertEncoder(LightningModule):
             architecture,
             output_attentions=output_attentions
         )
-        #self.pooling = pooling
+
 
     def forward(self, input_ids, attention_mask):
 
-        encoder_outputs = self.encoder(input_ids, attention_mask)
+        return self.encoder(input_ids, attention_mask)
 
-        return attention_mask, encoder_outputs.last_hidden_state
 
-        # return self.pooling(
-        #     attention_mask,
-        #     encoder_outputs
-        # )
