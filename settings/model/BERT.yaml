@@ -1,4 +1,4 @@
-name: BERT_NO_POOL
+name: BERT
 
 encoder:
   _target_: source.encoder.BertEncoder.BertEncoder
@@ -11,6 +11,8 @@ pooling:
 hidden_size: 768
 
 num_classes: ${data.num_classes}
+
+PAD: 0
 
 lr: 1e-5
 base_lr: 1e-7
